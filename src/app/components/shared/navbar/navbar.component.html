@@ -1,0 +1,67 @@
+<div class="navbar-wrapper">
+  <nav class="navbar">
+    <h1 class="title" [routerLink]="['/']">Fitster</h1>
+    <ul class="nav-items">
+      <li
+        [routerLink]="['/']"
+        routerLinkActive="active-link"
+        [routerLinkActiveOptions]="{ exact: true }"
+        class="nav-links"
+      >
+        Home
+      </li>
+      @if(currentUser$ | async){
+      <li
+        [routerLink]="['/fits']"
+        routerLinkActive="active-link"
+        [routerLinkActiveOptions]="{ exact: true }"
+        class="nav-links"
+      >
+        Fits
+      </li>
+      }
+      <li
+        [routerLink]="['/about']"
+        routerLinkActive="active-link"
+        [routerLinkActiveOptions]="{ exact: true }"
+        class="nav-links"
+      >
+        About
+      </li>
+      <li
+        [routerLink]="['/contact']"
+        routerLinkActive="active-link"
+        [routerLinkActiveOptions]="{ exact: true }"
+        class="nav-links"
+      >
+        Contact
+      </li>
+      <div class="login-wrapper">
+        @if (currentUser$ | async; as user) {
+        <div class="profile-wrapper" (click)="isProfileOpen = !isProfileOpen">
+          <img class="user-img" [src]="user.photoURL" alt="user-image" />
+          <span>{{ user.displayName }}</span>
+          <ng-icon class="icon" name="bootstrapChevronDown"></ng-icon>
+        </div>
+        @if (isProfileOpen) {
+        <div class="profile-open" (mouseleave)="isProfileOpen = false">
+          <ul>
+            <li>Profile</li>
+            <li>Test</li>
+            <li>Test</li>
+          </ul>
+        </div>
+        }
+
+        <button type="button" class="login-button" (click)="logOut()">
+          LogOut
+        </button>
+        } @else {
+        <button class="login-button" type="button" [routerLink]="['login']">
+          Log In
+        </button>
+        }
+      </div>
+    </ul>
+  </nav>
+</div>

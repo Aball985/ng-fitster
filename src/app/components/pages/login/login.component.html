@@ -1,0 +1,38 @@
+<div class="login-wrapper">
+  <form class="login-form">
+    <h1>Login</h1>
+    <input
+      type="text"
+      placeholder="email"
+      name="email"
+      class="text-input"
+      [(ngModel)]="emailTextInput"
+    />
+    <input
+      type="text"
+      placeholder="password"
+      name="password"
+      class="text-input"
+      [(ngModel)]="passwordTextInput"
+    />
+    <button
+      type="button"
+      class="email-button"
+      (click)="logInWithEmailAndPassword()"
+    >
+      Log In
+    </button>
+    <button type="button" class="google-button" (click)="loginWithGoogle()">
+      Log in with google
+      <ng-icon name="bootstrapGoogle"></ng-icon>
+    </button>
+    <div class="divider">
+      <hr />
+      or
+      <hr />
+    </div>
+    <button type="button" class="create-user" (click)="createNewUser()">
+      Create a new user
+    </button>
+  </form>
+</div>

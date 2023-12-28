@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "ng-fitster": {
+      "hosting": {
+        "ng-fitster": [
+          "ng-fitster"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "ng-fitster"
+  }
+}

@@ -1,0 +1,133 @@
+<div class="fit-wrapper">
+  <h1 class="title">Welcome, to Fitster</h1>
+  <h2>Points left: {{ maxNumberOfCords - points.length }}</h2>
+  <div
+    appTrackMouseCoordinates
+    class="fit"
+    (mouseleave)="isCursorPointVisible = false"
+    (mouseenter)="isCursorPointVisible = true"
+  >
+    <img
+      class="fit-image"
+      fill
+      [priority]="true"
+      ngSrc="assets/example-fit.webp"
+      alt="fit"
+    />
+    @if ((x_Coord$ | async) && (y_Coord$ | async) && isPointsVisible &&
+    isCursorPointVisible) {
+    <div
+      aria-hidden="true"
+      class="plot-point"
+      (click)="plotPoint()"
+      [style.left.px]="x_Coord$ | async"
+      [style.top.px]="y_Coord$ | async"
+    ></div>
+    <div
+      class="outer-circle"
+      [style.left.px]="x_Coord$ | async"
+      [style.top.px]="y_Coord$ | async"
+    ></div>
+    } @if (isPointsVisible) { @for (point of points; track $index) {
+    <div class="point-wrapper hover-text">
+      <div class="box" [style.left.px]="point.x" [style.top.px]="point.y"></div>
+      <div
+        class="plot-point"
+        [style.left.px]="point.x"
+        [style.top.px]="point.y"
+      ></div>
+      @if (!isLinkModalVisible && !point.link?.length) {
+      <span
+        class="tooltip-text"
+        [style.left.px]="point.x"
+        [style.top.px]="point.y - 30"
+      >
+        click
+        <span class="click-text" (click)="toggleLinkModal()">here</span>
+        to add a link!
+      </span>
+      } @else {
+      <span
+        class="tooltip-text"
+        [style.left.px]="point.x"
+        [style.top.px]="point.y - 30"
+      >
+        @if (!point.link?.length) {
+        <input type="text" [(ngModel)]="linkInputText" name="link-text" />
+        <button
+          [disabled]="!linkInputText.length"
+          type="button"
+          class="click-text clear-button"
+          (click)="addLinkToPoint($index)"
+        >
+          enter
+        </button>
+        <button
+          type="button"
+          class="click-text clear-button"
+          (click)="toggleLinkModal()"
+        >
+          back
+        </button>
+        } @else {
+        <a
+          class="fit-link"
+          [href]="point.link ? sanitizeUrl(point.link) : ''"
+          target="_blank"
+        >
+          Link
+        </a>
+        }
+      </span>
+      }
+      <div
+        class="outer-circle"
+        [style.left.px]="point.x"
+        [style.top.px]="point.y"
+      ></div>
+    </div>
+    }}
+  </div>
+  <div class="button-container">
+    <button
+      [disabled]="!points.length"
+      class="clear-button"
+      type="button"
+      (click)="clearPoints()"
+    >
+      Clear all points
+    </button>
+    <button
+      [disabled]="!points.length"
+      type="button"
+      class="clear-button"
+      (click)="hideAllPoints()"
+    >
+      {{ isPointsVisible ? "Hide" : "Show" }} all points
+    </button>
+    @if (points.length && currentPointsLength !== points.length) {
+    <button type="button" class="clear-button" (click)="undoLastPoint()">
+      Undo last point
+    </button>
+    } @if(points.length){
+    <button type="button" class="clear-button" (click)="openAllLinks()">
+      Open all links
+    </button>
+    }
+  </div>
+</div>
+
+<app-jw-modal id="openAllFitWarning">
+  <div class="modal-wrapper">
+    <h1>Warning:</h1>
+    <p>Are you sure you want to open all links?</p>
+    <div class="modal-button-container">
+      <button type="button" class="clear-button" (click)="closeModal()">
+        Close
+      </button>
+      <button type="button" class="clear-button" (click)="openAllLinks(true)">
+        Confirm
+      </button>
+    </div>
+  </div>
+</app-jw-modal>

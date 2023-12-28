@@ -1,0 +1,47 @@
+.squiggly-1 {
+  width: 60rem;
+  height: min-content;
+  position: absolute;
+  right: -5rem;
+  top: -3.5rem;
+  z-index: -1;
+}
+
+.home-wrapper {
+  position: relative;
+  height: 60rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  h1 {
+    text-align: center;
+    color: #fff;
+    text-transform: uppercase;
+    font-size: 4rem;
+  }
+}
+
+.image-background {
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  object-fit: cover;
+  z-index: -1;
+}
+
+.fit-button {
+  background-color: transparent;
+  border: 2px solid white;
+  outline: none;
+  padding: 1rem;
+  color: #fff;
+  cursor: pointer;
+  text-transform: uppercase;
+}
+
+.hero-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
